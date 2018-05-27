@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="二维线段树【转载】Feb 28, 2018 二维线段树最主要用于平面统计问题。类似一维线段树，最经典的就是求区间最值（或区间和），推广到二维，求得就是矩形区域最值（或矩形区域和），对于矩形区域和，二维树状数组更加高效，而矩形区域最值，更加高效的方法是二维RMQ，但是二维RMQ不支持动态更新，所以二维线段树还是有用武之地的。 如果对一维线段树已经驾轻就熟，那么直接来看下面两段对比，就可以轻松理解二维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mind Blog">
+<meta property="og:url" content="http://yoursite.com/2018/05/27/二维线段树/index.html">
+<meta property="og:site_name" content="Mind Blog">
+<meta property="og:description" content="二维线段树【转载】Feb 28, 2018 二维线段树最主要用于平面统计问题。类似一维线段树，最经典的就是求区间最值（或区间和），推广到二维，求得就是矩形区域最值（或矩形区域和），对于矩形区域和，二维树状数组更加高效，而矩形区域最值，更加高效的方法是二维RMQ，但是二维RMQ不支持动态更新，所以二维线段树还是有用武之地的。 如果对一维线段树已经驾轻就熟，那么直接来看下面两段对比，就可以轻松理解二维">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://jbcdn2.b0.upaiyun.com/2016/03/28c8edde3d61a0411511d3b1866f0636.png">
+<meta property="og:image" content="http://jbcdn2.b0.upaiyun.com/2016/03/665f644e43731ff9db3d341da5c827e1.png">
+<meta property="og:image" content="http://jbcdn2.b0.upaiyun.com/2016/03/38026ed22fc1a91d92b5d2ef93540f20.png">
+<meta property="og:updated_time" content="2018-05-27T11:56:37.548Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mind Blog">
+<meta name="twitter:description" content="二维线段树【转载】Feb 28, 2018 二维线段树最主要用于平面统计问题。类似一维线段树，最经典的就是求区间最值（或区间和），推广到二维，求得就是矩形区域最值（或矩形区域和），对于矩形区域和，二维树状数组更加高效，而矩形区域最值，更加高效的方法是二维RMQ，但是二维RMQ不支持动态更新，所以二维线段树还是有用武之地的。 如果对一维线段树已经驾轻就熟，那么直接来看下面两段对比，就可以轻松理解二维">
+<meta name="twitter:image" content="http://jbcdn2.b0.upaiyun.com/2016/03/28c8edde3d61a0411511d3b1866f0636.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/27/二维线段树/"/>
+
+
+
+
+
+  <title> | Mind Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mind Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/27/二维线段树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-27T20:26:14+08:00">
+                2018-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="二维线段树【转载】"><a href="#二维线段树【转载】" class="headerlink" title="二维线段树【转载】"></a>二维线段树【转载】</h1><p>Feb 28, 2018</p>
+<p>二维线段树最主要用于平面统计问题。类似一维线段树，最经典的就是求区间最值（或区间和），推广到二维，求得就是矩形区域最值（或矩形区域和），对于矩形区域和，二维树状数组更加高效，而矩形区域最值，更加高效的方法是二维RMQ，但是二维RMQ不支持动态更新，所以二维线段树还是有用武之地的。</p>
+<p>如果对一维线段树已经驾轻就熟，那么直接来看下面两段对比，就可以轻松理解二维线段树了。</p>
+<p>一维线段树是一棵二叉树，树上每个结点保存一个区间和一个域，非叶子结点一定有两个儿子结点，儿子结点表示的两个区间交集为空，并集为父结点表示的区间；叶子结点的表示区间长度为1，即单位长度；域则表示了需要求的数据，每个父结点的域可以通过两个儿子结点得出。</p>
+<p>二维线段树是一棵四叉树，树上每个结点保存一个矩形和一个域，非叶子结点一定有二或四 个儿子结点，儿子结点表示的四个矩形交集为空，并集为父结点表示的矩形；叶子结点表示的矩形长宽均为1，域则表示了需要求的数据，每个父结点的域可以通过四个儿子结点得出。</p>
+<p>一个4×3的矩形，可以用图1的树形结构来表示，给每个单位方块标上不同的颜色易于理解。<br><img src="http://jbcdn2.b0.upaiyun.com/2016/03/28c8edde3d61a0411511d3b1866f0636.png" alt="1"></p>
+<p>图1</p>
+<p>图1中，每个叶子结点的单位面积为1，非叶子结点表示的矩形进行四分后，如图2所示，四个子矩形分别表示的是儿子结点表示的矩形区域。特殊的，当矩形面积为1 X H或者W X 1的时候，变成了一维的情况，这就是为什么有些结点有四个子结点，而有些结点只有两个子结点的原因了。</p>
+<p><img src="http://jbcdn2.b0.upaiyun.com/2016/03/665f644e43731ff9db3d341da5c827e1.png" alt="2"></p>
+<p>图2</p>
+<p>基本结构已经清楚了，按照惯例，要介绍一下时空复杂度。</p>
+<p>首先来看空间复杂度，一个 W x H 的矩形，根结点表示的矩形是W x H，令N = max{W, H}，那么这棵二维线段树的深度D = log2(N)+1，当这棵树是一棵满四叉树的时候，结点数达到最大值，根据等比数列求和公式，最大情况的结点数为 (4^D – 1) / 3。更加直观的，当N = W = H = 2^k, 必定是一棵满四叉树，结点数为(4^D-1) / 3 = ( 4^(k+1) – 1 ) / 3 = (2^（2k+2）-1) / 3，去掉分子上的零头1，约等于(4/3)*N^2， 所以空间复杂度为O(N^2)。</p>
+<p>再来看时间复杂度，需要分情况：<br>建树：建树时必定访问到每个结点，而且都是访问一次，所以建树的复杂度为O(N^2)；</p>
+<p>单点更新：每次更新一个单位矩形的值，访问时只会访问从树的根结点到叶子结点的一条路径，所以单点更新的复杂度为O( log2(N) )。</p>
+<p>区域询问：情况类似一维的区间询问。从根结点开始拆分区域，当询问区域完全覆盖结点区域时，不需要递归往下走，总体复杂度是O( log2(N) * log2(N) ) ？ 这里还是打个问号先，具体是一个log还是两个log记不清了，找个时间证明一下，可以肯定的是，不会退化成O(N)。</p>
+<p>接下来看看每个树结点需要保存一些什么信息， 以最值为例，除了保存最值以外，有可能需要知道这个最值在整个矩形的具体坐标，所以我们的最值信息dataInfo需要保存三个信息，posx和posy表示最值的具体位置，val保存最值，由于二维线段树的空间复杂度为O(N^2)，所以坐标信息不会很大，为了尽力节省内存，坐标值用short来存即可。最值val的话看实际情况而定，一般用int就够了。</p>
+<p>treeNode则是线段树结点的结构体，其中成员由dataInfo对应的最值和son[4]表示的子结点编号组成，我们的线段树结点采用静态结点，即每个线段树结点都对应静态数组 nodes中的某个元素，便于通过编号在O(1)的时间内获取到对应树结点的指针，son[4]记录了四个子结点在nodes中的下标。仔细观察可以发现，如果对于一棵线段树，保证所有结点编号都连续的情况下，如果父结点的编号确定，那么子结点的编号也就确定了。</p>
+<p>例如，根结点编号为1，那么四个子结点编号为2、3、4、5，父结点编号为2，四个子结点的编号为6、7、8、9，根据数学归纳法，当结点编号为p，那么它的四个子结点编号为(4*p-2+x)，其中x取值为[0, 3]，所以四个子结点的编号信息可以通过O(1)的时间计算出来，就不用存储在线段树结点上了，大大节省了内存开销。</p>
+<p>结构定义代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#define  LOGN 10</span><br><span class="line">#define  MAXN (1 &lt;&lt; LOGN)</span><br><span class="line">#define  MAXNODES 3 * (1 &lt;&lt; (2 * LOGN) / 4 + 100)</span><br><span class="line">#define  son(x) (p * 4 - 2 + x)</span><br><span class="line"></span><br><span class="line">// 最值信息</span><br><span class="line">struct dataInfo </span><br><span class="line">&#123;</span><br><span class="line">    short posx, posy;</span><br><span class="line">    int val;</span><br><span class="line">    dataInfo() &#123;</span><br><span class="line">        posx = posy = val = - 1;</span><br><span class="line">    &#125;</span><br><span class="line">    dataInfo(short _posx, short _posy, int _val) </span><br><span class="line">    &#123;</span><br><span class="line">        posx = _posx;</span><br><span class="line">        posy = _posy;</span><br><span class="line">        val = _val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 线段树结点信息</span><br><span class="line">struct treeNode </span><br><span class="line">&#123;</span><br><span class="line">    // int son[4]</span><br><span class="line">    dataInfo maxv, minv;</span><br><span class="line">    void reset() </span><br><span class="line">    &#123;</span><br><span class="line">        maxv = dataInfo(0, 0, INT_MIN);</span><br><span class="line">        minv = dataInfo(0, 0, INT_MAX);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">nodes[ MAXNODES ];</span><br><span class="line"></span><br><span class="line">// 注意，这里需要返回指针，因为在后续使用中需要对这个结点的信息进行改变，</span><br><span class="line">treeNode * getNode(int id) </span><br><span class="line">&#123;</span><br><span class="line">    return &amp; nodes[id];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候，我们发现线段树的结点上还缺少一个很重要的信息，因为每个结点表示了一个矩形区域，那为什么没有存下这个矩形区域呢？毋庸置疑，也是为了节省内存，在接下来的区域查询、单点更新的介绍中会讲到，这个区域其实在每次递归的时候是作为传参进入函数内部的，结点编号确定，矩形区域就确定了，所以没必要存储在结点中。</p>
+<p>为了处理方便，我们还需要封装一个区间类（由于矩形可以表示成两个不同维度的区间，所以这里只需要封装一个区间类即可，矩形类的操作没有区间内那么简单，一目了然），它支持一些基本操作，如判交、判包含、取左右半区间等等，具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">struct Interval </span><br><span class="line">&#123;</span><br><span class="line">    int l, r;</span><br><span class="line">    Interval()  &#123;&#125;</span><br><span class="line">    Interval(int _l, int _r) </span><br><span class="line">    &#123;</span><br><span class="line">        l = _l;</span><br><span class="line">        r = _r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 区间中点</span><br><span class="line">    int mid() &#123;</span><br><span class="line">        return (l + r) &gt;&gt; 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 区间长度</span><br><span class="line">    int len() &#123;</span><br><span class="line">        return r - l + 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 左半区间</span><br><span class="line">    Interval left() &#123;</span><br><span class="line">        return Interval(l, mid());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 右半区间</span><br><span class="line">    Interval right() &#123;</span><br><span class="line">        return Interval(mid() + 1, r);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 区间判交</span><br><span class="line">    bool isIntersectWith( Interval &amp; tarI ) &#123;</span><br><span class="line">        return !( l &gt; tarI.r || r &lt; tarI.l );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 区间判包含</span><br><span class="line">    bool isInclude( Interval &amp; tarI ) &#123;</span><br><span class="line">        return l &lt;= tarI.l &amp;&amp; tarI.r &lt;= r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool in (int v) &#123;</span><br><span class="line">        return l &lt;= v &amp;&amp; v &lt;= r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>那么接下来就是建树了，建树就是递归生成结点的过程，这里的生成并非创建，原因是因为我们的结点是静态的。每建一次树，只是把所有线段树结点的信息进行一次重置，对于一个W x H的矩形，假定它的两个对角线坐标为(1, 1) – (W, H)，那么我们首先将它切割成四个矩形，令WM = (1+W)/2, HM = (1+H)/2对角线坐标分别为：<br>(1, 1) – (WM, HM)<br>(WM+1, 1) – (W, HM)<br>(1, HM+1) – (WM, H)<br>(WM+1, HM+1) – (W, H)</p>
+<p>如图3所示，四个切割完后的矩形如下：<br><img src="http://jbcdn2.b0.upaiyun.com/2016/03/38026ed22fc1a91d92b5d2ef93540f20.png" alt="3"></p>
+<p>图3</p>
+<p>这个切割过程是递归进行的，当某次切割的矩形为单位面积的时候，即为递归出口。当然还有一种情况，就是当某次切割后的矩形的某一维为1，而另一维大于1时，这里假设W = 1，H &gt; 1，那么继续切割时会发现WM+1 &gt; W,导致 (WM+1, 1) – (W, HM) 和 (WM+1, HM+1) – (W, H) 这两个矩形面积为负，所以在递归入口处需要判断是否有某一维的右端点小于左端点，如果有，这种矩形是不合法的，不能做为线段树的结点，不需要继续往下递归创建。</p>
+<p>建树代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void build_segtree(int p, Interval xI, Interval yI) </span><br><span class="line">&#123;</span><br><span class="line">    // 空矩形（右端点小于左端点）</span><br><span class="line">    if (xI.len() &lt;= 0 || yI.len() &lt;= 0)&#123;</span><br><span class="line">        return ;</span><br><span class="line">    &#125;</span><br><span class="line">    treeNode * now = getNode(p);</span><br><span class="line">    // 结点初始化</span><br><span class="line">    now-&gt;reset();</span><br><span class="line">    // 单位矩形</span><br><span class="line">    if (xI.len() == 1 &amp;&amp; yI.len() == 1)&#123;</span><br><span class="line">        return ;</span><br><span class="line">    &#125;</span><br><span class="line">    build_segtree( son(0), xI.left(), yI.left() );</span><br><span class="line">    build_segtree( son(1), xI.right(), yI.left());</span><br><span class="line">    build_segtree( son(2), xI.left(), yI.right() );</span><br><span class="line">    build_segtree( son(3), xI.right(), yI.right());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中p为当前线段树结点的编号，son(0) – son(3)则是作为子结点编号穿参进入切割后的矩形, getNode(p)用于获取编号为p的结点的结构指针，建树的目的就是为每个结点进行初始化，如果求的是最大值，那么将结点上的域都设成 INT_MIN ( 只要比所有接下来要插入的值小即可 )，如果求的是最小值，那么结点上的域都设成 INT_MAX( 只要比所有接下来要插入的值大即可 )。</p>
+<p>建树完毕后，这些结点都有了一个初始值，那么接下来就是需要在矩形的每个点插入一个值，然后更新线段树上每个结点的最值信息了。</p>
+<p>插入过程和建树过程的思想是一致的，同样是将矩形切割成四份，因为插入的是一个点，所以不可能同时存在于任意两个矩形中（因为是个矩形是互不相交的），所以每次四分只会选择一个矩形进行插入，为了让代码简介，我们还是先将矩形进行切割，然后模拟所有的矩形都能够插入，然后在递归入口处判断该点是否在矩形区域中，如果不在矩形区域直接返回。</p>
+<p>这样，当递归到单位矩形的时候，这个点的坐标一定是和矩形的坐标重合的，就可以直接更新该矩形所在的线段树结点的域信息了，更新完这个单位矩形还不够，还需要将信息传递给它的父结点，因为每次更新只有一个点，所以改变的结点只有从这个单位矩形所在结点到根结点的一条路径上的结点，所以复杂度是树的深度，即O(log2(N))。</p>
+<p>插入结点（单点更新）代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">bool insert_segtree(int p, Interval xI, Interval yI, int x, int y, int val)</span><br><span class="line">&#123;</span><br><span class="line">    if (xI.len() &lt;= 0 || yI.len() &lt;= 0)&#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    if ( !xI.in(x) || !yI.in(y) )&#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    treeNode *now = getNode(p);</span><br><span class="line">    if (xI.len() == 1 &amp;&amp; yI.len() == 1)</span><br><span class="line">    &#123;</span><br><span class="line">        now-&gt;maxv = now-&gt;minv = dataInfo(x, y, val);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    bool isvalid[4];</span><br><span class="line"></span><br><span class="line">    isvalid[0] = insert_segtree( son(0), xI.left(), yI.left(), x, y, val );</span><br><span class="line">    isvalid[1] = insert_segtree( son(1), xI.right(), yI.left(), x, y, val );</span><br><span class="line">    isvalid[2] = insert_segtree( son(2), xI.left(), yI.right(), x, y, val );</span><br><span class="line">    isvalid[3] = insert_segtree( son(3), xI.right(), yI.right(), x, y, val );</span><br><span class="line"></span><br><span class="line">    // 通过四个子结点的信息更新父结点</span><br><span class="line">    now-&gt;maxv = dataInfo(0, 0, MIN_VAL);</span><br><span class="line">    now-&gt;minv = dataInfo(0, 0, MAX_VAL);</span><br><span class="line"></span><br><span class="line">    int i;</span><br><span class="line">    for (i = 0; i &lt; 4; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        if ( !isvalid[i] )&#123;</span><br><span class="line">             continue;</span><br><span class="line">        &#125;</span><br><span class="line">        treeNode *sonNode = getNode(son(i));</span><br><span class="line">        now-&gt;maxv = sonNode-&gt;maxv.val &gt; now-&gt;maxv.val ? sonNode-&gt;maxv : now-&gt;maxv;</span><br><span class="line">        now-&gt;minv = sonNode-&gt;minv.val &lt; now-&gt;minv.val ? sonNode-&gt;minv : now-&gt;minv;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以发现，插入的核心代码和建树是一致的，但是这里的插入操作，返回了一个值，表示的是当前插入的线段树结点p是否合法，因为我们在插入的时候无论如何都会将矩形切割成四份，没有去考虑上文中提到的有一维为1的情况，父结点的域值是通过子结点回溯上来进行更新的，如果子结点不合法，不应该作为更新的依据，所以作为父结点，需要知道哪些结点是不合法的。</p>
+<p>有了更新，当然需要询问，没有询问，更新也就失去了意义。</p>
+<p>询问一般是区域询问（单点询问就没必要用线段树了），如图4所示，在一个4 x 3的矩形中，需要询问灰色的矩形（3 x 2的矩形，以下统一称为询问矩形）中最大的数是什么。首先来说说原理，同样，和建树以及插入操作一样，我们首先不断将矩形进行切割，每当访问到一个结点的时候将询问矩形和结点矩形进行判交测试，一共有以下几种情况：<br><strong>1、询问矩形和结点矩形没有交集（图4中所有白色的叶子结点）；2、询问矩形完全包含结点矩形（图4中根结点的第三个子结点）；3、询问矩形不完全包含结点矩形，并且存在交集（图4中根结点的第一、二、四个子结点）；</strong></p>
+<p>首先我们需要保存一个全局最大值信息，这个信息可以通过引用的方式传递到函数中去，在递归的过程中不断迭代更新；</p>
+<p>对于第1、2两种情况都是不需要继续往下递归的，第1种情况不会影响目前的最大值，第2种情况需要将结点上的最大值和全局最大值进行比较，保留大的那个；第三种情况有交集，所以我们需要将矩形继续分割，直到出现第1或者第2种情况为止，而且一定是可以出现的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// query_type 0 最大值   1最小值</span><br><span class="line">void query_segtree(int p, Interval xI, Interval yI, Interval tarXI, Interval tarYI, dataInfo &amp;ans, i nt query_type)</span><br><span class="line">&#123;</span><br><span class="line">    if (xI.len() &lt;= 0 || yI.len() &lt;= 0)&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    if (!tarXI.isIntersectWith(xI) || !tarYI.isIntersectWith(yI))&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    treeNode *now = getNode(p); // 最大值优化</span><br><span class="line">    if (query_type == 0 &amp;&amp; ans.val &gt;= now-&gt;maxv.val)&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 最小值优化</span><br><span class="line">    if (query_type == 1 &amp;&amp; ans.val &lt;= now-&gt;minv.val)&#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (tarXI.isInclude(xI) &amp;&amp; tarYI.isInclude(yI))</span><br><span class="line">    &#123;</span><br><span class="line">        if (query_type == 0)&#123;</span><br><span class="line">            ans = now-&gt;maxv;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            ans = now-&gt;minv;</span><br><span class="line">        &#125;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    query_segtree(son(0), xI.left(), yI.left(), tarXI, tarYI, ans, query_type);</span><br><span class="line">    query_segtree(son(1), xI.right(), yI.left(), tarXI, tarYI, ans, query_type);</span><br><span class="line">    query_segtree(son(2), xI.left(), yI.right(), tarXI, tarYI, ans, query_type);</span><br><span class="line">    query_segtree(son(3), xI.right(), yI.right(), tarXI, tarYI, ans, query_type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里加入了一个query_type，表示求的是最大值还是最小值，因为有的时候既需要知道最大值，又需要知道最小值，为了简化函数个数引入的一个变量。这里我们发现，当求最大值的时候，如果 询问矩形 和 结点矩形 是有交集并且并非完全包含的情况下，如果结点最大值比全局最大值（以上代码中的ans即全局最大值信息）还小，那么没必要再往下递归了，因为递归下去的最大值不会比当前结点的最大值大，这个优化很重要。</p>
+<p>以上就是二维线段树通过三个函数实现求区域最值的全部内容，建树(build_segtree)、插入(insert_segtree) 、询问(query_segtree),其实当我们将这三个函数中的 yI 这个区间变成[1, 1]的时候，就变成了一维线段树的模板了。</p>
+<p>P.S. 其实像线段树这种东西看一次就记住了，完全没必要再写一个博客，但是就让我做信息传播的蜜蜂吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/27/GridView的创建教程/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/27/逆元/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhida</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二维线段树【转载】"><span class="nav-number">1.</span> <span class="nav-text">二维线段树【转载】</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhida</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

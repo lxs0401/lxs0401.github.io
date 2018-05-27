@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="GridView的创建教程Mar 26, 2018 目標當我們使用程式集的時候，會看到一堆程式排列成九宮格的樣子，其實它叫做GridView, 要怎麼使用這個View呢？ 完整程式碼1234567891011121314151617181920212223242526272829303132333435public class MainActivity extends AppCompatActiv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mind Blog">
+<meta property="og:url" content="http://yoursite.com/2018/05/27/GridView的创建教程/index.html">
+<meta property="og:site_name" content="Mind Blog">
+<meta property="og:description" content="GridView的创建教程Mar 26, 2018 目標當我們使用程式集的時候，會看到一堆程式排列成九宮格的樣子，其實它叫做GridView, 要怎麼使用這個View呢？ 完整程式碼1234567891011121314151617181920212223242526272829303132333435public class MainActivity extends AppCompatActiv">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://github.com/givemepassxd999/blog_files/blob/master/Android_AS/GridViewDemo/01.png?raw=true">
+<meta property="og:image" content="https://github.com/givemepassxd999/blog_files/blob/master/Android_AS/GridViewDemo/02.png?raw=true">
+<meta property="og:updated_time" content="2018-05-27T11:53:51.237Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mind Blog">
+<meta name="twitter:description" content="GridView的创建教程Mar 26, 2018 目標當我們使用程式集的時候，會看到一堆程式排列成九宮格的樣子，其實它叫做GridView, 要怎麼使用這個View呢？ 完整程式碼1234567891011121314151617181920212223242526272829303132333435public class MainActivity extends AppCompatActiv">
+<meta name="twitter:image" content="https://github.com/givemepassxd999/blog_files/blob/master/Android_AS/GridViewDemo/01.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/27/GridView的创建教程/"/>
+
+
+
+
+
+  <title> | Mind Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mind Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/27/GridView的创建教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mind Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-27T20:26:14+08:00">
+                2018-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="GridView的创建教程"><a href="#GridView的创建教程" class="headerlink" title="GridView的创建教程"></a>GridView的创建教程</h1><p>Mar 26, 2018</p>
+<h3 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h3><p>當我們使用程式集的時候，會看到一堆程式排列成九宮格的樣子，<br>其實它叫做GridView, 要怎麼使用這個View呢？</p>
+<h3 id="完整程式碼"><a href="#完整程式碼" class="headerlink" title="完整程式碼"></a>完整程式碼</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">    private GridView gridView;</span><br><span class="line">    private int[] image = &#123;</span><br><span class="line">            R.drawable.cat, R.drawable.flower, R.drawable.hippo,</span><br><span class="line">            R.drawable.monkey, R.drawable.mushroom, R.drawable.panda,</span><br><span class="line">            R.drawable.rabbit, R.drawable.raccoon</span><br><span class="line">    &#125;;</span><br><span class="line">    private String[] imgText = &#123;</span><br><span class="line">            &quot;cat&quot;, &quot;flower&quot;, &quot;hippo&quot;, &quot;monkey&quot;, &quot;mushroom&quot;, &quot;panda&quot;, &quot;rabbit&quot;, &quot;raccoon&quot;</span><br><span class="line">    &#125;;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        List&lt;Map&lt;String, Object&gt;&gt; items = new ArrayList&lt;&gt;();</span><br><span class="line">        for (int i = 0; i &lt; image.length; i++) &#123;</span><br><span class="line">            Map&lt;String, Object&gt; item = new HashMap&lt;&gt;();</span><br><span class="line">            item.put(&quot;image&quot;, image[i]);</span><br><span class="line">            item.put(&quot;text&quot;, imgText[i]);</span><br><span class="line">            items.add(item);</span><br><span class="line">        &#125;</span><br><span class="line">        SimpleAdapter adapter = new SimpleAdapter(this,</span><br><span class="line">                items, R.layout.grid_item, new String[]&#123;&quot;image&quot;, &quot;text&quot;&#125;,</span><br><span class="line">                new int[]&#123;R.id.image, R.id.text&#125;);</span><br><span class="line">        gridView = (GridView)findViewById(R.id.main_page_gridview);</span><br><span class="line">        gridView.setNumColumns(3);</span><br><span class="line">        gridView.setAdapter(adapter);</span><br><span class="line">        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) &#123;</span><br><span class="line">                Toast.makeText(MainActivity.this, &quot;你選擇了&quot; + imgText[position], Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h3><p>先下載<a href="https://github.com/givemepassxd999/blog_files/blob/master/Android_AS/GridViewDemo/drawable.zip" target="_blank" rel="noopener">圖檔</a><br>這個圖檔是用來擺放下圖的各種動物icon,<br>下載完了解壓縮後, 放置res/drawable內。<br><img src="https://github.com/givemepassxd999/blog_files/blob/master/Android_AS/GridViewDemo/01.png?raw=true" alt="img"><br>接著我們開一個新專案<br>在XML先宣告一個GridView</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot; android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot; android:paddingLeft=&quot;@dimen/activity_horizontal_margin&quot;</span><br><span class="line">    android:paddingRight=&quot;@dimen/activity_horizontal_margin&quot;</span><br><span class="line">    android:paddingTop=&quot;@dimen/activity_vertical_margin&quot;</span><br><span class="line">    android:paddingBottom=&quot;@dimen/activity_vertical_margin&quot; tools:context=&quot;.MainActivity&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;GridView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;</span><br><span class="line">        android:id=&quot;@+id/main_page_gridview&quot;</span><br><span class="line">        android:numColumns=&quot;auto_fit&quot;</span><br><span class="line">        android:gravity=&quot;center&quot;</span><br><span class="line">        android:columnWidth=&quot;50pt&quot;</span><br><span class="line">        android:stretchMode=&quot;columnWidth&quot;/&gt;</span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>然後初始化一些我們想要放進去的資料</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private GridView gridView;</span><br><span class="line">private int[] image = &#123;</span><br><span class="line">        R.drawable.cat, R.drawable.flower, R.drawable.hippo,</span><br><span class="line">        R.drawable.monkey, R.drawable.mushroom, R.drawable.panda,</span><br><span class="line">        R.drawable.rabbit, R.drawable.raccoon</span><br><span class="line">&#125;;</span><br><span class="line">private String[] imgText = &#123;</span><br><span class="line">        &quot;cat&quot;, &quot;flower&quot;, &quot;hippo&quot;, &quot;monkey&quot;, &quot;mushroom&quot;, &quot;panda&quot;, &quot;rabbit&quot;, &quot;raccoon&quot;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>圖片跟文字一定要對應好，不然看得時候會牛頭不對馬嘴。</p>
+<p>再來就是初始化元件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; items = new ArrayList&lt;Map&lt;String,Object&gt;&gt;();</span><br><span class="line">for (int i = 0; i &lt; image.length; i++) &#123;</span><br><span class="line">     Map&lt;String, Object&gt; item = new HashMap&lt;String, Object&gt;();</span><br><span class="line">     item.put(&quot;image&quot;, image[i]);</span><br><span class="line">     item.put(&quot;text&quot;, imgText[i]);</span><br><span class="line">     items.add(item);</span><br><span class="line">&#125;</span><br><span class="line">SimpleAdapter adapter = new SimpleAdapter(this, </span><br><span class="line">    items, R.layout.grid_item, new String[]&#123;&quot;image&quot;, &quot;text&quot;&#125;,</span><br><span class="line">    new int[]&#123;R.id.image, R.id.text&#125;);</span><br></pre></td></tr></table></figure>
+<p>這邊是最重要的地方，<br>我們宣告一個一個xml用來裝我們GridView其中一個item，<br>grid_item.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;</span><br><span class="line">    android:layout_width=&quot;fill_parent&quot;</span><br><span class="line">    android:layout_height=&quot;fill_parent&quot;</span><br><span class="line">    android:gravity=&quot;center&quot;</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;ImageView android:id=&quot;@+id/image&quot;</span><br><span class="line">        android:layout_width=&quot;35pt&quot;</span><br><span class="line">        android:layout_height=&quot;35pt&quot;</span><br><span class="line">        android:layout_marginTop=&quot;5pt&quot;</span><br><span class="line">        &gt;</span><br><span class="line">    &lt;/ImageView&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView </span><br><span class="line">        android:layout_height=&quot;fill_parent&quot;</span><br><span class="line">        android:layout_width=&quot;fill_parent&quot;</span><br><span class="line">        android:id=&quot;@+id/text&quot;</span><br><span class="line">        android:textSize=&quot;9pt&quot;</span><br><span class="line">        android:gravity=&quot;center&quot;</span><br><span class="line">        android:paddingTop = &quot;15px&quot;</span><br><span class="line">  android:paddingBottom = &quot;15px&quot;&gt;</span><br><span class="line">    &lt;/TextView&gt;</span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>上面顏色對應顏色的地方，就是當我們把adapter丟進GridView裡面的時候，<br>所要對應的文字跟圖片，<br>SimpleAdapter接收grid_item這個xml，然後吃下items這個arraylist，<br>當它解開這個arraylist的時候，<br>它會去找尋我的item當中的image該對應到xml裡面的那個元件，<br>這樣一來就可以找到所對應的圖片或文字了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gridView = (GridView)findViewById(R.id.main_page_gridview);</span><br><span class="line">gridView.setNumColumns(3);</span><br><span class="line">gridView.setAdapter(adapter);</span><br><span class="line">gridView.setOnItemClickListener(new OnItemClickListener()&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) &#123;</span><br><span class="line">       Toast.makeText(MainActivity.this, &quot;你選擇了&quot; + imgText[position], Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在這邊我直接對GridView設定為3 columns，這樣就會顯示三個垂直列，<br>接著設定按下某一個item以後的事件。<br><img src="https://github.com/givemepassxd999/blog_files/blob/master/Android_AS/GridViewDemo/02.png?raw=true" alt="img"></p>
+<p>這樣就完成一個簡單的GridView了。<br><a href="https://github.com/givemepassxd999/blog_files/blob/master/Android_AS/GridViewDemo/GridViewDemo.zip" target="_blank" rel="noopener">程式碼</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/27/CF题目/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/27/二维线段树/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhida</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GridView的创建教程"><span class="nav-number">1.</span> <span class="nav-text">GridView的创建教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目標"><span class="nav-number">1.0.1.</span> <span class="nav-text">目標</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整程式碼"><span class="nav-number">1.0.2.</span> <span class="nav-text">完整程式碼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步驟"><span class="nav-number">1.0.3.</span> <span class="nav-text">步驟</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhida</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
